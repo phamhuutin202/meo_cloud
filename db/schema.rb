@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170713091937) do
+ActiveRecord::Schema.define(version: 20170714101414) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -43,11 +43,36 @@ ActiveRecord::Schema.define(version: 20170713091937) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "doctors", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.index ["email"], name: "index_doctors_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_doctors_on_reset_password_token", unique: true
+  end
+
   create_table "exams", force: :cascade do |t|
     t.string   "status"
-    t.text     "prescription"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "location"
+    t.integer  "patient_id"
+    t.integer  "technician_id"
+    t.integer  "doctor_id"
+    t.integer  "eye_prescription_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["doctor_id"], name: "index_exams_on_doctor_id"
+    t.index ["eye_prescription_id"], name: "index_exams_on_eye_prescription_id"
+    t.index ["patient_id"], name: "index_exams_on_patient_id"
+    t.index ["technician_id"], name: "index_exams_on_technician_id"
   end
 
   create_table "eye_prescriptions", force: :cascade do |t|
@@ -118,6 +143,26 @@ ActiveRecord::Schema.define(version: 20170713091937) do
     t.string   "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "technicians", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "username"
+    t.string   "firstname"
+    t.string   "lastname"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.index ["email"], name: "index_technicians_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_technicians_on_reset_password_token", unique: true
   end
 
 end
