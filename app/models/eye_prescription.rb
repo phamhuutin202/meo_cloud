@@ -1,0 +1,2 @@
+class EyePrescription < ApplicationRecord
+end
